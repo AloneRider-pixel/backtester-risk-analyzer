@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Backtester &amp; Portfolio Risk Analyzer</title>
+<script src="https://unpkg.com/lightweight-charts@4.2.0/dist/lightweight-charts.standalone.production.js"></script>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: system-ui, sans-serif; background: #111418; color: #d6d9de; margin: 0; }
+  header { padding: 16px 24px; border-bottom: 1px solid #262b33; }
+  header h1 { font-size: 18px; margin: 0; font-weight: 600; }
+  header p { margin: 4px 0 0; font-size: 13px; color: #8b929c; }
+  .panel { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 24px; align-items: end; }
+  label { font-size: 12px; color: #8b929c; display: block; margin-bottom: 4px; }
+  input, select { background: #1a1f26; color: #d6d9de; border: 1px solid #2c333d; border-radius: 6px; padding: 6px 8px; width: 110px; font-size: 13px; }
+  button { background: #2563eb; color: #fff; border: 0; border-radius: 6px; padding: 8px 16px; font-size: 13px; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  #charts { padding: 0 24px 24px; }
+  .chart-box { background: #161a20; border: 1px solid #262b33; border-radius: 8px; margin-bottom: 16px; }
+  .chart-title { font-size: 13px; color: #8b929c; padding: 8px 12px 0; }
+  .chart { height: 260px; }
+  #metrics { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 0 24px 16px; }
+  .metric { background: #161a20; border: 1px solid #262b33; border-radius: 8px; padding: 10px 12px; }
+  .metric .k { font-size: 11px; color: #8b929c; }
+  .metric .v { font-size: 16px; font-weight: 600; margin-top: 2px; }
+  #trades { padding: 0 24px 24px; font-size: 12px; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: right; padding: 4px 8px; border-bottom: 1px solid #22262e; }
+  th:first-child, td:first-child { text-align: left; }
+  #status { padding: 0 24px 8px; font-size: 13px; color: #8b929c; min-height: 18px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Automated Backtester &amp; Portfolio Risk Analyzer</h1>
+  <p>Vectorized EMA-crossover engine, realistic costs (slippage + commission), walk-forward option.
+     Demo data is synthetic (seeded GBM) unless noted.</p>
+</header>
+<div class="panel">
+  <div><label>Bars</label><input id="n_bars" type="number" value="1500"></div>
+  <div><label>Fast EMA</label><input id="fast" type="number" value="12"></div>
+  <div><label>Slow EMA</label><input id="slow" type="number" value="48"></div>
+  <div><label>Slippage (bps)</label><input id="slippage_bps" type="number" value="5"></div>
+  <div><label>Commission type</label><select id="commission_type"><option value="flat">flat</option><option value="bps">bps</option></select></div>
+  <div><label>Commission value</label><input id="commission_value" type="number" value="20"></div>
+  <div><label>Walk-forward</label><select id="walk_forward"><option value="false">off</option><option value="true">on</option></select></div>
+  <button id="run">Run backtest</button>
+</div>
+<div id="status"></div>
+<div id="metrics"></div>
+<div id="charts">
+  <div class="chart-box"><div class="chart-title">Equity curve (strategy vs buy &amp; hold<span id="wf-label"></span>)</div><div id="equity" class="chart"></div></div>
+  <div class="chart-box"><div class="chart-title">Drawdown</div><div id="dd" class="chart"></div></div>
+</div>
+<div id="trades"></div>
+<script src="static/app.js"></script>
+</body>
+</html>
