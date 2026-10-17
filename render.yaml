@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: backtester-risk-analyzer
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
